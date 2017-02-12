@@ -1,0 +1,39 @@
+<!--
+
+Copyright (c) 2016 Nandini Khanwalkar, Mike Lane
+
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.0" xml:lang = "en-US" xmlns = "http://www.w3.org/2001/vxml">
+
+<form id = "order_drink">
+		<field name = "drink">
+			<prompt>
+			What would you like to drink ? We offer coke, pepsi and 7-up.
+			</prompt>
+
+			<grammar xml:lang="en-US" root = "drink_choice">
+					<rule id="drink_choice">
+						<one-of>
+							<item> Coke </item>
+							<item> Coco Cola <tag> out.drink_choice="coke" </tag></item>
+							<item> Cola <tag> out.drink_choice="coke" </tag></item>
+							<item> Pepsi </item>
+							<item> 7-Up </item>
+						</one-of>
+					</rule>
+			</grammar>
+			<noinput>
+				I did not hear anything. You may order Coke, Pepsi or 7-Up. Please try again.
+				<reprompt/>
+			</noinput>
+			<nomatch>
+				I'm sorry. I did not understand that. You may order Coke, Pepsi or 7-Up. Please try again.
+			</nomatch>		
+		</field>
+		<filled> Your drink order has been recorded. You ordered a <value expr="drink" /> for 1 dollar.
+			<return/>
+		</filled>
+	</form>
+</vxml>

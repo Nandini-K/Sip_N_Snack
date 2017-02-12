@@ -1,0 +1,14 @@
+<!--
+
+Copyright (c) 2016 Nandini Khanwalkar, Mike Lane
+
+-->
+
+<grammar xml:lang="en-US" root = 'yes_or_no'>
+  <rule id='yes_or_no' scope="public">
+    <one-of>
+      <item> yes </item>
+      <item> no </item>
+    </one-of>
+  </rule>
+</grammar>

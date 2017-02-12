@@ -1,0 +1,130 @@
+<!--
+
+Copyright (c) 2016 Nandini Khanwalkar, Mike Lane
+
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.0" xml:lang = "en-US" xmlns = "http://www.w3.org/2001/vxml">
+	<menu>
+		<prompt> Welcome to Sip 'n' Snack online ordering service. We offer delicious custom made sandwiches.
+			What would you like to order today ? 
+      A <emphasis level="strong">sandwich</emphasis>, a <emphasis level="strong">drink</emphasis> or a <emphasis level="strong">combo</emphasis>?
+		</prompt>
+		<choice next ="#order_snack">sandwich</choice>
+		<choice next ="#order_drink">drink</choice>
+		<choice next ="#order_combo">combo</choice>
+		<noinput>
+			I did not hear anything.  Please say sandwich, drink, or combo.
+			<reprompt/>
+		</noinput>
+		<nomatch>
+			I'm sorry. I did not understand that. To order a sandwich, say sandwich; to order a drink, say drink; to order both, say combo. Please try again.
+		</nomatch>
+	</menu>
+
+	<var name = "order_bill" expr = "0.0"/>
+	<var name = "drink_cost" expr = "1.0"/>
+	
+	<form id= "order_snack">
+		<subdialog name = "sandwich_price" src="Snack.xml" >
+		</subdialog>
+		<field name="c_or_e">
+		<prompt>	
+			Do you want me to confirm the order or do you wish to edit it ?
+		</prompt>
+		<grammar xml:lang="en-US" root = "place_or_edit">
+			<rule id="place_or_edit">
+				<one-of>
+					<item> confirm </item>
+					<item> edit </item>
+				</one-of>
+			</rule>
+		</grammar>
+		<noinput>
+				I did not hear anything.  Please say confirm or edit.
+				<reprompt/>
+			</noinput>
+			<nomatch>
+				I'm sorry. I did not understand that. Please say confirm or edit.
+			</nomatch>
+		</field>
+		<filled>
+		<if cond = "c_or_e == 'confirm'">
+			<prompt>your order has been placed. Goodbye.
+			</prompt>
+			<exit/>
+		</if>
+		<if cond=" c_or_e == 'edit'">
+			<goto next = "#order_snack" />
+		</if>
+		</filled>
+	</form>
+	
+	<form id="order_drink">
+		<subdialog src="Drink.xml" />
+		<field name="c_or_e">
+		<prompt>	
+			Do you want me to confirm the order or do you wish to edit it ?
+		</prompt>
+		<grammar xml:lang="en-US" root = "place_or_edit">
+			<rule id="place_or_edit">
+				<one-of>
+					<item> confirm </item>
+					<item> edit </item>
+				</one-of>
+			</rule>
+		</grammar>
+		<noinput>
+				I did not hear anything.  Please say confirm or edit.
+				<reprompt/>
+			</noinput>
+			<nomatch>
+				I'm sorry. I did not understand that. Please say confirm or edit.
+			</nomatch>
+		</field>
+		<filled>
+		<if cond = "c_or_e == 'confirm'">
+			<prompt>your order has been placed. Goodbye.
+			</prompt>
+			<exit/>
+		</if>
+		<if cond=" c_or_e == 'edit'">
+			<goto next = "#order_drink" />
+		</if>
+		</filled>
+	</form>
+	<form id = "order_combo">
+		<subdialog src="Snack.xml" />
+		<subdialog src="Drink.xml" />
+		<field name="c_or_e">
+		<prompt>	
+			Do you want me to confirm the order or do you wish to edit it ?
+		</prompt>
+		<grammar xml:lang="en-US" root = "place_or_edit">
+			<rule id="place_or_edit">
+				<one-of>
+					<item> confirm </item>
+					<item> edit </item>
+				</one-of>
+			</rule>
+		</grammar>
+		<noinput>
+				I did not hear anything.  Please say confirm or edit.
+				<reprompt/>
+			</noinput>
+			<nomatch>
+				I'm sorry. I did not understand that. Please say confirm or edit.
+			</nomatch>
+		</field>
+		<filled>
+		<if cond = "c_or_e == 'confirm'">
+			<prompt>your order has been placed. Goodbye.
+			</prompt>
+			<exit/>
+		</if>
+		<if cond=" c_or_e == 'edit'">
+			<goto next = "#order_combo" />
+		</if>
+		</filled>
+	</form>

@@ -1,0 +1,255 @@
+<!--
+
+Copyright (c) 2016 Nandini Khanwalkar, Mike Lane
+
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.0" xml:lang = "en-US" xmlns = "http://www.w3.org/2001/vxml">
+
+  <var name = "bread_cost" expr = "2.0"/>
+  <var name="m1" expr="0.0"/>
+  <var name="m2" expr="0.0"/>
+  <var name="m3" expr="0.0"/>
+  <var name="v1" expr="0.0"/>
+  <var name="v2" expr="0.0"/>
+  <var name="v3" expr="0.0"/>
+  <var name="v4" expr="0.0"/>
+  <var name="curr_order"/>
+  <var name="sandwich_cost" expr="0.0"/>
+  <var name="sandwich_order" expr="'a '"/>
+  <form id = "order_snack">
+    <property name="universals" value="help" />
+    <field name='bread'>
+      <grammar xml:lang="en-US" root = "bread_type">
+        <rule id="bread_type">
+          <one-of>
+            <item> Wheat </item>
+            <item> Rye </item>
+            <item> Sour dough </item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <prompt count="1">
+        What type of bread would you like for your sandwich?
+      </prompt>
+
+      <prompt count="2">
+        What type of bread?
+      </prompt>
+
+      <noinput>
+        I did not hear anything. Please try again.
+        <reprompt/>
+      </noinput>
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>You may say
+        <emphasis>wheat</emphasis>,
+        <emphasis>rye</emphasis>, or
+        <emphasis>sour dough</emphasis><break strength="weak" />
+        <reprompt />
+      </help>
+
+    </field>
+    <field name='meat'>
+      <prompt count="1"> Would you like any meat for your sandwich?</prompt>
+      <prompt count="2"> Would you like any meat?</prompt>
+
+      <grammar src="YN-grammar.xml"/>
+      <noinput>
+        I did not hear anything. Please try again.
+        <reprompt/>
+      </noinput>
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like meat or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+
+    </field>
+
+    <field name='meat_choice1' cond="meat=='yes'">
+      <prompt count="1"> Would you like some chicken?</prompt>
+      <prompt count="2"> Chicken?</prompt>
+
+      <grammar src="YN-grammar.xml"/>
+
+      <noinput>
+        I did not hear anything.  You may simply say yes or no. Please try again.
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like chicken or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+    </field>
+
+    <field name='meat_choice2' cond="meat=='yes'">
+      <prompt count="1"> How about some meatballs ? </prompt>
+      <prompt count="2"> Meatballs? </prompt>
+
+      <grammar src="YN-grammar.xml"/>
+
+      <noinput>
+        I did not hear anything.  You may simply say yes or no. Please try again.
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like meatballs or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+    </field>
+
+    <field name='meat_choice3' cond="meat=='yes'">
+      <prompt count="1"> Would you like to add some tuna? </prompt>
+      <prompt count="2"> Tuna? </prompt>
+
+      <grammar src="YN-grammar.xml"/>
+
+      <noinput>
+        I did not hear anything. You may simply say yes or no. Please try again.
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like tuna or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+    </field>
+
+    <field name='veg1'>
+      <prompt count="1"> Do you want some lettuce ? </prompt>
+      <prompt count="2"> Lettuce? </prompt>
+
+      <grammar src="YN-grammar.xml"/>
+
+      <noinput>
+        I did not hear anything. You may simply say yes or no. Please try again.
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like lettuce or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+    </field>
+
+    <field name='veg2'>
+      <prompt count="1"> How about some thinly sliced tomatoes? </prompt>
+      <prompt count="2"> Tomatoes?</prompt>
+
+      <grammar src="YN-grammar.xml"/>
+
+      <noinput>
+        I did not hear anything. You may simply say yes or no. Please try again.
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like tomatoes or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+    </field>
+
+    <field name='veg3'>
+      <prompt count="1"> Would you liked to add our farm fresh olives? </prompt>
+      <prompt count="2"> Olives? </prompt>
+
+      <grammar src="YN-grammar.xml"/>
+
+      <noinput>
+        I did not hear anything. You may simply say yes or no. Please try again.
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like olives or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+    </field>
+
+    <field name='veg4'>
+      <prompt count="1"> Would you care for a slice of pickle? </prompt>
+      <prompt count="2"> Pickle? </prompt>
+
+      <grammar src="YN-grammar.xml"/>
+
+      <noinput>
+        I did not hear anything. You may simply say yes or no. Please try again.
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        I'm sorry. I did not understand that.
+        <throw event="help" />
+      </nomatch>
+
+      <help>Please say <emphasis>yes</emphasis> if you would like pickle or <emphasis>no</emphasis> if you don't. <reprompt /></help>
+    </field>
+
+    <filled namelist="bread veg1 veg2 veg3 veg4">
+      <if cond="meat_choice1=='yes'">
+        <assign name="m1" expr="3.0"/>
+        <assign name="curr_order" expr="sandwich_order + ' chicken '"/>
+        <assign name="sandwich_order" expr="curr_order"/>
+      </if>
+      <if cond="meat_choice2=='yes'">
+        <assign name="m2" expr="3.0"/>
+        <assign name="curr_order" expr="sandwich_order + ' meatballs '"/>
+        <assign name="sandwich_order" expr="curr_order"/>
+      </if>
+      <if cond="meat_choice3=='yes'">
+        <assign name="m3" expr="3.0"/>
+        <assign name="curr_order" expr="sandwich_order + ' tuna '"/>
+        <assign name="sandwich_order" expr="curr_order"/>
+      </if>
+      <assign name="curr_order" expr="sandwich_order + ' sandwich with ' + bread + ' bread and ' "/>
+      <assign name="sandwich_order" expr="curr_order"/>
+      <if cond="veg1=='yes'">
+        <assign name="v1" expr="0.5"/>
+        <assign name="curr_order" expr="sandwich_order + ' lettuce '"/>
+        <assign name="sandwich_order" expr="curr_order"/>
+      </if>
+      <if cond="veg2=='yes'">
+        <assign name="v2" expr="0.5"/>
+        <assign name="curr_order" expr="sandwich_order + ' tomatoes '"/>
+        <assign name="sandwich_order" expr="curr_order"/>
+      </if>
+      <if cond="veg3=='yes'">
+        <assign name="v3" expr="0.5"/>
+        <assign name="curr_order" expr="sandwich_order + ' olives '"/>
+        <assign name="sandwich_order" expr="curr_order"/>
+      </if>
+      <if cond="veg4=='yes'">
+        <assign name="v4" expr="0.5"/>
+        <assign name="curr_order" expr="sandwich_order + ' pickle '"/>
+        <assign name="sandwich_order" expr="curr_order"/>
+      </if>
+      <assign name="sandwich_cost" expr="bread_cost + m1 + m2 + m3 + v1 + v2 + v3 + v4"/>
+      <prompt>
+        Your sandwich order has been recorded. You ordered <value expr="sandwich_order"/> for <value expr="sandwich_cost"/> dollars.
+      </prompt>
+      <return namelist = "sandwich_cost" />
+    </filled>
+  </form>
+</vxml>
